@@ -33,6 +33,9 @@ class AnotherWindow(QDialog):
         self.Email = email
         self.Sum_ = sum_
         self.Comments = comments
+        if "'" in comments:
+            self.Comments = self.Comments.replace("'", "")
+
         super().__init__()
         self.ui2 = second_window.Ui_Dialog()
         self.ui2.setupUi(self)
@@ -105,9 +108,18 @@ class AnotherWindow(QDialog):
             self.start()
 
     def sent_sms(self, to, text):
-        r = requests.post(
-            f"https://api.turbosms.ua/message/send.json?recipients[0]\
-            =38{to}&sms[sender]=AVTOSOJUZ&sms[text]={text}&token={not_for_git.token}")
+        # r = requests.post(
+        #     f"https://api.turbosms.ua/message/send.json?recipients[0]\
+        #     =38{to}&sms[sender]=AVTOSOJUZ&sms[text]={text}&token={not_for_git.token}")
+        query = f"""
+        DECLARE @Script nvarchar(max) =
+        N'
+        insert into avtosojuz (message,number,sign)
+        values (''{text}'', ''38{to}'', ''AVTOSOJUZ'');'
+         EXECUTE (@script) AT turbosms;
+"""
+        self.cursor.execute(query)
+        self.cnn.commit()
 
     def my_notifier(self, x):
         toaster = ToastNotifier()

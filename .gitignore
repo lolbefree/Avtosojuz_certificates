@@ -2,3 +2,10 @@ not_for_git.py
 venv
 avtosojuz_certificates.exe.config
 app.spec
+.git
+.idea
+__pycache__
+build
+dist
+venv
+Сертифікати автосоюз.spec

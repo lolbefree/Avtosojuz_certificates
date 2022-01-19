@@ -38,7 +38,7 @@ def sender(receiver_emails, receiver_names, name_file):
             msg = MIMEMultipart()
             msg['To'] = formataddr((receiver_name, receiver_email))
             msg['From'] = formataddr((sender_name, sender_email))
-            msg['Subject'] = 'Подарунковий сертифікат для вас ' + receiver_name
+            msg['Subject'] = 'Подарунковий сертифікат для Вас, ' + receiver_name
 
             msg.attach(MIMEText(email_body, 'html'))
 
